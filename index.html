@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Uploads Files</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        .box {
+            background-color: #e4e4e4;
+            color: #000000;
+            border: 1px solid #4e4e4e;
+
+            height: 16px;
+        }
+
+        .btn {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="files[]" class="form-control" multiple>
+            <input type="submit" class="btn btn-primary" value="Dale aqui de lo mio">
+        </form>
+
+        <div class="row">
+            <div class="col col-md-12">
+                <div id="result" class="col col-md-12">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="uploads.js"></script>
+</body>
+
+</html>
