@@ -27,6 +27,8 @@ form.addEventListener('submit', e => {
     
     
     if(done){
+        formData.append('clave', JSON.stringify({"name":"dionicio"}));
+
         fetch(url, {
             method: 'POST',
             body: formData,
