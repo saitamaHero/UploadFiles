@@ -28,12 +28,19 @@
 <body>
     <div class="container">
         <form method="post" enctype="multipart/form-data">
-            <input type="file" name="files[]" class="form-control" multiple>
+            <div class="form-group">
+                <label for="username">Usuario</label>
+                <input class="form-control" type="text" name="username" id="user">
+            </div>
+
+            <input class="form-control" type="file" name="files[]" multiple>
             <input type="submit" class="btn btn-primary" value="Dale aqui de lo mio">
+
         </form>
 
         <div class="row">
             <div class="col col-md-12">
+                <!-- div para los resultados de la operacion terminada -->
                 <div id="result" class="col col-md-12">
 
                 </div>

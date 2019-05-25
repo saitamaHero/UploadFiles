@@ -1,12 +1,19 @@
 const UPLOAP_MAX_SIZE = 2097152;
 
-const url = 'http://localhost/UploadFile/process.php';
+//const url = 'http://localhost/UploadFile/process.php';
+const url = '/UploadFile/process.php';
 const form = document.querySelector('form');
 
 let result = document.querySelector("#result");
 
 form.addEventListener('submit', e => {
     e.preventDefault();
+    let username = document.querySelector("#user").value.trim();
+    
+    if(username.length <= 0){
+        result.innerHTML += createAlert("info","Debes <strong>poner</strong> un usuario");
+        return;
+    }
 
     const files = document.querySelector('[type=file]').files;
     const formData = new FormData();
@@ -24,10 +31,10 @@ form.addEventListener('submit', e => {
         
     }
 
-    
-    
+    console.log(form);
+        
     if(done){
-        formData.append('clave', JSON.stringify({"name":"dionicio"}));
+        formData.append('userdata', JSON.stringify({"user": username}));
 
         fetch(url, {
             method: 'POST',

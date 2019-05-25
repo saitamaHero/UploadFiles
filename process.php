@@ -8,20 +8,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = [];
     $response['success'] = FALSE;
     $response['errs']    = [];
-    $response['objeto']  = $_POST['clave'];
-
+    
     if (isset($_FILES)) {
-
-        $response['filesInfo'] = get_files_objects();
+       // $response['filesInfo'] = get_files_objects();
+       
         $errors = [];
         $uploads_path = "..\\Uploads\\";
         $allow_extensions = ['jpg', 'jpeg', 'png'];
 
+        if(isset($_POST['userdata'])){
+            $userData = json_decode($_POST['userdata']);
+
+            $uploads_path = sprintf("%s%s\\",$uploads_path, $userData -> user);
+
+            if(!file_exists($uploads_path) && mkdir($uploads_path, 0777, true)){
+                $response['userDirectory'] = "El directorio fue creado exitosamente";
+            }
+            
+            if(!file_exists($uploads_path)){
+                $errors[] = "The directory for this user can't be created";
+            }   
+        }
+ 
         $count_files = count($_FILES['files']['tmp_name']);
-
-        //$response['files'] = $_FILES;
-
-        //print_r($_FILES);
 
         for ($i = 0; $i < $count_files; $i++) {
             $file_name = $_FILES['files']['name'][$i];
@@ -35,8 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $path = $uploads_path . $file_name;
 
-
-
             if (!in_array($file_ext, $allow_extensions)) {
                 $errors[] = sprintf("Esta extension no está permitida '%s' en %s", $file_type, $file_name);
                 $errors[] = mime_content_type($file_tmp);
@@ -49,11 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
             }
 
-            if (empty($errors)) {
-                move_uploaded_file($file_tmp, $path);
-            } else {
-                break;
+            if(!file_exists($path)){
+                if (empty($errors)) {
+                    move_uploaded_file($file_tmp, $path);
+                } else {
+                    break;
+                }
             }
+            
         }
 
         if (empty($errors)) {
